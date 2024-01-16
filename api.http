@@ -1,0 +1,12 @@
+### test de GET
+GET http://localhost:3000/products/
+
+
+### create
+POST http://localhost:3000/products/create/
+Content-Type: application/json
+
+{
+    "name": "iphone",
+    "price": 1500,
+}
