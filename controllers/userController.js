@@ -1,5 +1,8 @@
-export function getAllUser(req, res, next) {
-  res.status(200).json("respond with a product");
+import { UserModel } from "../models/mysql/users";
+
+export function getAllUser((req, res, next)) {
+  const users = await UserModel.getAllUsers()
+  res.json(users)
 }
 export function getUserById(req, res, next) {
   console.log(req.params.id); // parameters URL
@@ -11,12 +14,20 @@ export function putUserById(req, res, next) {
   // insert in DB
   res.status(201).json(req.body);
 }
-export function createUser(req, res, next) {
-  body = "";
-  console.log(req.body); // body request 201
-
-  // insert in DB
-  res.status(201).json(req.body);
+export function postUser(req, res, next) {
+  const {
+    name,
+    email,
+    password,
+    age
+  }  = req.body
+    const newUser ={
+      "name": name,
+      "email": email,
+      "password" : password,
+      "age" : age
+    }
+  res.status(201).json(newUser)
 }
 export function deleteUserById(req, res, next) {
   console.log(req.params.id);

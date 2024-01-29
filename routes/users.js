@@ -4,7 +4,7 @@ import {
   getAllUser,
   getUserById,
   putUserById,
-  createUser,
+  postUser,
   deleteUserById,
 } from "../controllers/userController";
 
@@ -18,7 +18,7 @@ router.get("/:productId", getUserById);
 router.put("/productId", putUserById);
 
 // create an user
-router.post("/create", createUser);
+router.post("/register", postUser);
 
 // delete an user
 router.delete("/:productsId", deleteUserById);

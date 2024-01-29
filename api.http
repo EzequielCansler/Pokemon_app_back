@@ -1,12 +1,14 @@
 ### test de GET
-GET http://localhost:3000/products/
+GET http://localhost:3000/users/
 
 
 ### create
-POST http://localhost:3000/products/create/
+POST http://localhost:3000/register/
 Content-Type: application/json
 
 {
-    "name": "iphone",
-    "price": 1500,
+   "name": "name",
+      "email": "email",
+      "password" : "password",
+      "age" : "age"
 }
