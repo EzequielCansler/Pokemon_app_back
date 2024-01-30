@@ -20,4 +20,4 @@ function findAvailablePort(desiredPort) {
   });
 }
 
-export default { findAvailablePort };
+export default findAvailablePort;
