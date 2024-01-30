@@ -35,13 +35,18 @@ export class UserModel {
       throw error;
     }
   }
-  /*
-  static async createUser(user) {
-    const { user_handle, email_address, password, birthdate } = user;
-    const result = await connection.execute(
-      "INSERT INTO users (user_handle, email_address, password, birthdate) VALUES (?, ?, ?, ?)",
-      [user_handle, email_address, password, birthdate]
-    );
+
+  static async createUser(newUser) {
+    const { user_handle, email_address, password, birthdate } = newUser;
+    if (!user_handle || !email_address || !password || !birthdate) {
+      throw new Error("Missing required fields");
+    } else {
+      const result = await connection.execute(
+        "INSERT INTO users (user_handle, email_address, password, birthdate) VALUES (hola, asd@, 123, 1999-05-7)",
+        [user_handle, email_address, password, birthdate]
+      );
+    }
+
     return result[0].insertId;
-  } */
+  }
 }

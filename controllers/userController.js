@@ -19,12 +19,12 @@ export class UserController {
     }
   }
   static async postUser(req, res, next) {
-    const { name, email, password, age } = req.body;
+    const { user_handle, email_address, password, birthdate } = req.body;
     const newUser = {
-      name: name,
-      email: email,
+      name: user_handle,
+      email: email_address,
       password: password,
-      age: age,
+      age: birthdate,
     };
     res.status(201).json(newUser);
   }
