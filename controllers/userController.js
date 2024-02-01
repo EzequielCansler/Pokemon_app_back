@@ -6,7 +6,7 @@ export class UserController {
     if (users.length > 0) {
       return res.json(users);
     } else {
-      return next({ status: 404, message: "No user found" });
+      return next({ status: 404, message: "Usuario no encontrado" });
     }
   }
   static async getUserById(req, res, next) {
@@ -15,18 +15,23 @@ export class UserController {
     if (user) {
       res.json(user);
     } else {
-      res.status(404).json({ error: "Usuario no encontrado" });
+      res.status(404).json({ message: "Usuario no encontrado" });
     }
   }
   static async postUser(req, res, next) {
     const { user_handle, email_address, password, birthdate } = req.body;
-    const newUser = {
-      name: user_handle,
-      email: email_address,
-      password: password,
-      age: birthdate,
-    };
-    res.status(201).json(newUser);
+    try {
+      const newUser = await UserModel.createUser({
+        user_handle,
+        email_address,
+        password,
+        birthdate,
+      });
+      res.status(201).json({ newUser });
+    } catch (error) {
+      console.log("Error en el controlador", error);
+      res.status(500).json({ error: "Error al crear el usuario" });
+    }
   }
   static async putUserById(req, res, next) {
     console.log(req.body); // body request 201
@@ -35,6 +40,22 @@ export class UserController {
     res.status(201).json(req.body);
   }
   static async deleteUserById(req, res, next) {
-    console.log(req.params.id);
+    const { userId } = req.params;
+
+    try {
+      let deletedUser = await UserModel.deleteUserById(userId);
+
+      if (!deletedUser) {
+        return res.status(404).json({ message: "El usuario no existe" });
+      } else {
+        return res
+          .status(200)
+          .json({ message: "Se ha eliminado correctamente el usuario" });
+      }
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ message: "Error al procesar la solicitud" });
+    }
   }
 }

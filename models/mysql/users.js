@@ -42,11 +42,26 @@ export class UserModel {
       throw new Error("Missing required fields");
     } else {
       const result = await connection.execute(
-        "INSERT INTO users (user_handle, email_address, password, birthdate) VALUES (hola, asd@, 123, 1999-05-7)",
+        "INSERT INTO users (user_handle, email_address, password, birthdate) VALUES (?,?,?,?)",
         [user_handle, email_address, password, birthdate]
       );
+      return result[0].insertId;
     }
+  }
 
-    return result[0].insertId;
+  static async deleteUserById(id) {
+    try {
+      const [results] = await connection.execute(
+        "DELETE FROM users WHERE user_id = ?",
+        [id]
+      );
+      if (results.affectedRows > 0) {
+        return true;
+      } else {
+        return false; // user not founded
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 }
